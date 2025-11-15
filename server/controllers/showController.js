@@ -96,7 +96,6 @@ export const getShows = async (req, res) => {
         res.json({success: true, shows: Array.from(uniqueShows)})
     } catch (error) {
         console.log(error.message);
-        res.json({success: false, message: Array.from(uniqueShows)})
         
     }
 }
