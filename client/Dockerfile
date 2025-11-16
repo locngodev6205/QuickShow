@@ -1,14 +1,20 @@
-# Ví dụ
-FROM node:20-alpine
+# Stage build
+FROM node:20 AS build
 
 WORKDIR /app
 
 COPY package*.json ./
-
-# Debug thêm thông tin
-RUN node -v && npm -v && ls -la && \
-    npm ci || (echo "===== NPM CI FAILED, DUMP LOG =====" && cat /root/.npm/_logs/*-debug-0.log && exit 1)
+RUN npm ci
 
 COPY . .
-
 RUN npm run build
+
+FROM nginx:alpine
+
+# Copy build output sang nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+# docker run -p 8080:80 quickshow-fe
