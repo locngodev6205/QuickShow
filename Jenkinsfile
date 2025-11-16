@@ -32,9 +32,9 @@ pipeline {
 
                         aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com
 
-                        docker tag pbl4-quickshow-backend:${VERSION} 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-backend:${VERSION}
+                        docker tag pbl4-quickshow-backend:${VERSION} 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
 
-                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-backend:${VERSION}
+                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
                     '''
                 }
             }
@@ -54,9 +54,9 @@ pipeline {
 
                         aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com
 
-                        docker tag pbl4-quickshow-frontend:${VERSION} 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-frontend:${VERSION}
+                        docker tag pbl4-quickshow-frontend:${VERSION} 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
 
-                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-frontend:${VERSION}
+                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
                     '''
                 }
             }
