@@ -21,20 +21,25 @@ pipeline {
         stage('Build & Upload Backend') {
             when {
                 expression {
-                    def action=env.ACTION
+                    def action = env.ACTION
                     return (action == 'OnlyBE' || action == 'BOTH')
                 }
             }
             steps {
-                withAWS(credentials: 'pbl4-credential', region : 'ap-southeast-1') {
+                withAWS(credentials: 'pbl4-credential', region: 'ap-southeast-1') {
                     sh '''
+                        # Build image backend
                         docker build -t pbl4-quickshow-backend:${VERSION} server
 
-                        aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com
+                        # Login ECR
+                        aws ecr get-login-password --region ap-southeast-1 \
+                          | docker login --username AWS --password-stdin 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com
 
-                        docker tag pbl4-quickshow-backend:${VERSION} 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
+                        # Tag & push lên repo BACKEND riêng
+                        docker tag pbl4-quickshow-backend:${VERSION} \
+                          120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-backend:${VERSION}
 
-                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
+                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-backend:${VERSION}
                     '''
                 }
             }
@@ -43,20 +48,25 @@ pipeline {
         stage('Build & Upload Frontend') {
             when {
                 expression {
-                    def action=env.ACTION
+                    def action = env.ACTION
                     return (action == 'OnlyFE' || action == 'BOTH')
                 }
             }
             steps {
-                withAWS(credentials: 'pbl4-credential', region : 'ap-southeast-1') {
+                withAWS(credentials: 'pbl4-credential', region: 'ap-southeast-1') {
                     sh '''
+                        # Build image frontend
                         docker build -t pbl4-quickshow-frontend:${VERSION} client
 
-                        aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com
+                        # Login ECR
+                        aws ecr get-login-password --region ap-southeast-1 \
+                          | docker login --username AWS --password-stdin 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com
 
-                        docker tag pbl4-quickshow-frontend:${VERSION} 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
+                        # Tag & push lên repo FRONTEND riêng
+                        docker tag pbl4-quickshow-frontend:${VERSION} \
+                          120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-frontend:${VERSION}
 
-                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-docker:${VERSION}
+                        docker push 120915930136.dkr.ecr.ap-southeast-1.amazonaws.com/pbl4-quickshow-frontend:${VERSION}
                     '''
                 }
             }
