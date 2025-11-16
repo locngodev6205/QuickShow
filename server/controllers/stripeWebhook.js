@@ -5,6 +5,8 @@ import { inngest } from '../inngest/index.js';
 const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
 
 export const stripeWebhooks = async (req, res) => {
+    console.log("I'am here");
+    
     const sig = req.headers["stripe-signature"];
     let event;
 

@@ -19,7 +19,7 @@ console.log("✅ Server file is running and routes are being defined...");
 await connectDB();
 
 // Stripe Webhooks Route
-app.use('/api/stripe', express.raw({ type: 'application/json'}), stripeWebhooks)
+app.post('/api/stripe', express.raw({ type: 'application/json'}), stripeWebhooks)
 
 // Middleware
 app.use(express.json())
