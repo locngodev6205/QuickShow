@@ -22,7 +22,7 @@ pipeline {
             when {
                 expression {
                     def action=env.ACTION
-                    return (action == 'BE' || action == 'BOTH')
+                    return (action == 'OnlyBE' || action == 'BOTH')
                 }
             }
             steps {
@@ -44,7 +44,7 @@ pipeline {
             when {
                 expression {
                     def action=env.ACTION
-                    return (action == 'FE' || action == 'BOTH')
+                    return (action == 'OnlyFE' || action == 'BOTH')
                 }
             }
             steps {
