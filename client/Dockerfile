@@ -1,26 +1,14 @@
-# ===== Build stage =====
-FROM node:18-alpine AS build
+# Ví dụ
+FROM node:20-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+
+# Debug thêm thông tin
+RUN node -v && npm -v && ls -la && \
+    npm ci || (echo "===== NPM CI FAILED, DUMP LOG =====" && cat /root/.npm/_logs/*-debug-0.log && exit 1)
 
 COPY . .
+
 RUN npm run build
-
-
-# ===== Run stage (Nginx) =====
-FROM nginx:alpine
-
-# Copy file build từ Vite sang thư mục Nginx
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copy cấu hình nginx cho SPA
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
-
-# docker run -p 8080:80 quickshow-fe
