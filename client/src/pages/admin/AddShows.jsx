@@ -11,7 +11,7 @@ const AddShows = () => {
 
   const {axios, getToken, user, image_base_url} = useAppContext()
 
-  const currency = import.meta.env.production.VITE_CURRENCY
+  const currency = import.meta.env.VITE_CURRENCY
   // Mảng danh sách phim đang chiếu
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   // Mảng danh sách phim đang chiếu.
