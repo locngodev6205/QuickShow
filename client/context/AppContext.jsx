@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL
+axios.defaults.baseURL = import.meta.env.production.VITE_BASE_URL
 
 export const AppContext = createContext()
 
@@ -14,7 +14,7 @@ export const AppProvider = ({children}) => {
     const [shows, setShows] = useState([]);
     const [favoriteMovies, setFavoriteMovies] = useState([]);
 
-    const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
+    const image_base_url = import.meta.env.production.VITE_TMDB_IMAGE_BASE_URL;
 
     const { user } = useUser();
     const {getToken} = useAuth() // Return JWT Token
