@@ -12,6 +12,8 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+COPY .env.production .env.production
+
 # Build Vite
 RUN npm run build
 
