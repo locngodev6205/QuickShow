@@ -24,7 +24,7 @@ const HeroSection = () => {
                 <span>Action | Adventure | Sri-Fi</span>
                 <div className="flex items-center gap-1">
                     <CalendarIcon className="w-4.5 h-4.5 " />
-                    2018
+                    2019
                 </div>
 
                 <div className="flex items-center gap-1">
